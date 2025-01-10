@@ -1,0 +1,7 @@
+pytest
+pytest-asyncio
+pytest-cov
+build
+twine
+setuptools_scm
+automlst-engine
