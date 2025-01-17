@@ -1,6 +1,6 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 import asyncio
-from automlst.engine.remote.databases.bigsdb import BIGSdbIndex
+from automlst.engine.data.remote.databases.bigsdb import BIGSdbIndex
 
 def setup_parser(parser: ArgumentParser):
     parser.description = "Fetches the latest BIGSdb MLST database definitions."
@@ -24,9 +24,10 @@ def setup_parser(parser: ArgumentParser):
         help="Lists the known schema IDs for a given BIGSdb sequence definition database name. The name, and then the ID of the schema is given."
     )
 
-    parser.set_defaults(func=run_asynchronously)
+    parser.set_defaults(run=run_asynchronously)
+    return parser
 
-async def run(args):
+async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
         if args.list_dbs:
             known_seqdef_dbs = await bigsdb_index.get_known_seqdef_dbs(force=False)
@@ -37,6 +38,9 @@ async def run(args):
             for schema_desc, schema_id in schemas.items():
                 print(f"{schema_desc}: {schema_id}")
 
-def run_asynchronously(args):
+        if not (args.list_dbs or len(args.list_bigsdb_schemas) > 0):
+            print("Nothing to do. Try specifying \"-l\".")
+
+def run_asynchronously(args: Namespace):
     asyncio.run(run(args))
 

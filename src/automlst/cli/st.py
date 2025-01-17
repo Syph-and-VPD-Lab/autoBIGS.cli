@@ -1,10 +1,10 @@
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 import asyncio
 import datetime
-from automlst.engine.local.csv import write_mlst_profiles_as_csv
-from automlst.engine.local.fasta import read_multiple_fastas
-from automlst.engine.remote.databases.bigsdb import BIGSdbIndex
+from automlst.engine.data.local.csv import write_mlst_profiles_as_csv
+from automlst.engine.data.local.fasta import read_multiple_fastas
+from automlst.engine.data.remote.databases.bigsdb import BIGSdbIndex
 
 
 def setup_parser(parser: ArgumentParser):
@@ -52,9 +52,10 @@ def setup_parser(parser: ArgumentParser):
         default=False,
         help="Should the algorithm stop in the case there are no matches (or partial matches when expecting exact matches)."
     )
-    parser.set_defaults(func=run_asynchronously)
+    parser.set_defaults(run=run_asynchronously)
+    return parser
 
-async def run(args):
+async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
         gen_strings = read_multiple_fastas(args.fastas)
         async with await bigsdb_index.build_profiler_from_seqdefdb(args.seqdefdb, args.schema) as mlst_profiler:

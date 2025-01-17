@@ -1,27 +1,39 @@
 import argparse
-import asyncio
-import datetime
+from importlib import metadata
 from os import path
 import os
 
 from automlst.cli import info, st
 from automlst.cli.meta import get_module_base_name
-from automlst.engine.data.genomics import NamedString
-from automlst.engine.local.abif import read_abif
-from automlst.engine.local.csv import write_mlst_profiles_as_csv
-from automlst.engine.local.fasta import read_fasta
-from automlst.engine.remote.databases.bigsdb import BIGSdbIndex
+import importlib
 
-root_parser = argparse.ArgumentParser()
-subparsers = root_parser.add_subparsers(required=True)
+root_parser = argparse.ArgumentParser(epilog='Use "%(prog)s info -h" to learn how to get available MLST databases, and their available schemas.'
+                                      + ' Once that is done, use "%(prog)s st -h" to learn how to retrieve MLST profiles.'
+                                      )
+subparsers = root_parser.add_subparsers(required=False)
 
 info.setup_parser(subparsers.add_parser(get_module_base_name(info.__name__)))
 st.setup_parser(subparsers.add_parser(get_module_base_name(st.__name__)))
 
+root_parser.add_argument(
+    "--version",
+    action="store_true",
+    default=False,
+    required=False,
+    help="Displays the autoMLST.CLI version, and the autoMLST.Engine version."
+)
+
 
 def run():
     args = root_parser.parse_args()
-    args.func(args)
+    if args.version:
+        print(f'autoMLST.CLI is running version {
+              metadata.version("automlst-cli")}.')
+        print(f'autoMLST.Engine is running version {
+              metadata.version("automlst-engine")}.')
+    if hasattr(args, "run"):
+        args.run(args)
+
 
 if __name__ == "__main__":
     run()

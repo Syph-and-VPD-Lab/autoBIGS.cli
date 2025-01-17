@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "automlst.cli"
 dynamic = ["version"]
+readme = "README.md"
 
 dependencies = [
     "automlst-engine"
