@@ -3,18 +3,18 @@ requires = ["setuptools>=64", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "automlst.cli"
+name = "autoBIGSst.cli"
 dynamic = ["version"]
 readme = "README.md"
 
 dependencies = [
-    "automlst-engine"
+    "autoBIGSst-engine"
 ]
 requires-python = ">=3.11"
 description = "A CLI tool to rapidly fetch fetch MLST profiles given sequences for various diseases."
 
 [project.scripts]
-automlst = "automlst.cli.program:run"
+autoBIGSst = "autoBIGSst.cli.program:run"
 
 [tool.setuptools_scm]
 

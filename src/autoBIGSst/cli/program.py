@@ -3,8 +3,8 @@ from importlib import metadata
 from os import path
 import os
 
-from automlst.cli import info, st
-from automlst.cli.meta import get_module_base_name
+from autoBIGSst.cli import info, st
+from autoBIGSst.cli.meta import get_module_base_name
 import importlib
 
 root_parser = argparse.ArgumentParser(epilog='Use "%(prog)s info -h" to learn how to get available MLST databases, and their available schemas.'
@@ -20,17 +20,17 @@ root_parser.add_argument(
     action="store_true",
     default=False,
     required=False,
-    help="Displays the autoMLST.CLI version, and the autoMLST.Engine version."
+    help="Displays the autoBIGSst.CLI version, and the autoBIGSst.Engine version."
 )
 
 
 def run():
     args = root_parser.parse_args()
     if args.version:
-        print(f'autoMLST.CLI is running version {
-              metadata.version("automlst-cli")}.')
-        print(f'autoMLST.Engine is running version {
-              metadata.version("automlst-engine")}.')
+        print(f'autoBIGSst.CLI is running version {
+              metadata.version("autoBIGSst-cli")}.')
+        print(f'autoBIGSst.Engine is running version {
+              metadata.version("autoBIGSst-engine")}.')
     if hasattr(args, "run"):
         args.run(args)
 

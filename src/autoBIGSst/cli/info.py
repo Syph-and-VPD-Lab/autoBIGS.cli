@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace
 import asyncio
-from automlst.engine.data.remote.databases.bigsdb import BIGSdbIndex
+from autoBIGSst.engine.data.remote.databases.bigsdb import BIGSdbIndex
 
 def setup_parser(parser: ArgumentParser):
     parser.description = "Fetches the latest BIGSdb MLST database definitions."
