@@ -3,8 +3,8 @@ from importlib import metadata
 from os import path
 import os
 
-from autoBIGS.cli import info, st
-from autoBIGS.cli.meta import get_module_base_name
+from autobigs.cli import info, st
+from autobigs.cli.meta import get_module_base_name
 import importlib
 
 root_parser = argparse.ArgumentParser(epilog='Use "%(prog)s info -h" to learn how to get available MLST databases, and their available schemas.'

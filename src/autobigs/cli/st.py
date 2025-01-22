@@ -2,9 +2,9 @@
 from argparse import ArgumentParser, Namespace
 import asyncio
 import datetime
-from autoBIGS.engine.data.local.csv import write_mlst_profiles_as_csv
-from autoBIGS.engine.data.local.fasta import read_multiple_fastas
-from autoBIGS.engine.data.remote.databases.bigsdb import BIGSdbIndex
+from autobigs.engine.data.local.csv import write_mlst_profiles_as_csv
+from autobigs.engine.data.local.fasta import read_multiple_fastas
+from autobigs.engine.data.remote.databases.bigsdb import BIGSdbIndex
 
 
 def setup_parser(parser: ArgumentParser):
