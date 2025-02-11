@@ -10,7 +10,7 @@ import importlib
 root_parser = argparse.ArgumentParser(epilog='Use "%(prog)s info -h" to learn how to get available MLST databases, and their available schemas.'
                                       + ' Once that is done, use "%(prog)s st -h" to learn how to retrieve MLST profiles.'
                                       )
-subparsers = root_parser.add_subparsers(required=True)
+subparsers = root_parser.add_subparsers(required=False)
 
 info.setup_parser(subparsers.add_parser(get_module_base_name(info.__name__)))
 st.setup_parser(subparsers.add_parser(get_module_base_name(st.__name__)))
@@ -33,6 +33,8 @@ def run():
               metadata.version("autoBIGS-engine")}.')
     if hasattr(args, "run"):
         args.run(args)
+    elif not args.version:
+        root_parser.print_usage()
 
 
 if __name__ == "__main__":
