@@ -4,4 +4,4 @@ pytest-cov
 build
 twine
 setuptools_scm
-autoBIGS.engine
+autoBIGS.engine==0.10.*

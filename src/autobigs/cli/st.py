@@ -2,9 +2,9 @@
 from argparse import ArgumentParser, Namespace
 import asyncio
 import datetime
-from autobigs.engine.data.local.csv import write_mlst_profiles_as_csv
-from autobigs.engine.data.local.fasta import read_multiple_fastas
-from autobigs.engine.data.remote.databases.bigsdb import BIGSdbIndex
+from autobigs.engine.writing import write_mlst_profiles_as_csv
+from autobigs.engine.reading import read_multiple_fastas
+from autobigs.engine.analysis.bigsdb import BIGSdbIndex
 
 
 def setup_parser(parser: ArgumentParser):
@@ -36,15 +36,6 @@ def setup_parser(parser: ArgumentParser):
     )
 
     parser.add_argument(
-        "--exact", "-ex",
-        action="store_true",
-        dest="exact",
-        required=False,
-        default=False,
-        help="Should run exact matching rather than returning all similar ones"
-    )
-
-    parser.add_argument(
         "--stop-on-fail", "-sof",
         action="store_true",
         dest="stop_on_fail",
@@ -58,7 +49,7 @@ def setup_parser(parser: ArgumentParser):
 async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
         gen_strings = read_multiple_fastas(args.fastas)
-        async with await bigsdb_index.build_profiler_from_seqdefdb(args.seqdefdb, args.schema) as mlst_profiler:
+        async with await bigsdb_index.build_profiler_from_seqdefdb(False, args.seqdefdb, args.schema) as mlst_profiler:
             mlst_profiles = mlst_profiler.profile_multiple_strings(gen_strings, exact=args.exact)
             failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out)
             if len(failed) > 0:
