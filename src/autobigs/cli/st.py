@@ -50,7 +50,7 @@ async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
         gen_strings = read_multiple_fastas(args.fastas)
         async with await bigsdb_index.build_profiler_from_seqdefdb(False, args.seqdefdb, args.schema) as mlst_profiler:
-            mlst_profiles = mlst_profiler.profile_multiple_strings(gen_strings, exact=args.exact)
+            mlst_profiles = mlst_profiler.profile_multiple_strings(gen_strings)
             failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out)
             if len(failed) > 0:
                 print(f"A total of {len(failed)} IDs failed:\n{"\n".join(failed)}")
