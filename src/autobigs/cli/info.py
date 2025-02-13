@@ -31,7 +31,7 @@ async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
         if args.list_dbs:
             known_seqdef_dbs = await bigsdb_index.get_known_seqdef_dbs(force=False)
-            print("\n".join(known_seqdef_dbs.keys()))
+            print("\n".join(sorted(known_seqdef_dbs.keys())))
 
         for bigsdb_schema_name in args.list_bigsdb_schemas:
             schemas = await bigsdb_index.get_schemas_for_seqdefdb(bigsdb_schema_name)
