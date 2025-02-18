@@ -12,6 +12,7 @@ This CLI is capable of exactly what [autoBIGS.engine](https://pypi.org/project/a
 - Fetch the available BIGSdb database schemas for a given MLST database
 - Retrieve exact/non-exact MLST allele variant IDs based off a sequence
 - Retrieve MLST sequence type IDs based off a sequence
+- Inexact matches are annotated with an asterisk (\*)
 - Output all results to a single CSV
 
 ## Planned Features for CLI
@@ -40,6 +41,18 @@ Let's say you have a fasta called `seq.fasta` which contains several sequences. 
 
 3. Then, run `autobigs st -h` and familiarize yourself with the parameters needed for sequence typing.
 
-4. Namely, you should find that you will need to run `autobigs st seq.fasta pubmlst_bordetella_seqdef 3 output.csv`. You can optionally include multiple `FASTA` files, and/or `--exact` to only retrieve exact sequence types, and/or `--stop-on-fail` to stop typing if one of your sequences fail to retrieve any type. 
+4. Namely, you should find that you will need to run `autobigs st seq.fasta pubmlst_bordetella_seqdef 3 output.csv`. You can optionally include multiple `FASTA` files, and `--stop-on-fail` to stop typing if one of your sequences fail to retrieve any type. 
 
 5. Sit tight, and wait. The `output.csv` will contain your results once completed.
+
+## Versioning
+
+the autoBIGS project follows [semantic versioning](https://semver.org/) where the three numbers may be interpreted as MAJOR.MINOR.PATCH.
+
+Note regarding major version 0 ([spec item 4](https://semver.org/#spec-item-4)), the following adaptation of semantic versioning definition is as follows:
+
+1. Given x.Y.z, Y is only incremented when a backwards incompatible change is made.
+
+2. Given x.y.Z, Z is only incremented when a backwards compatible change is made.
+
+Versions of autoBIGS items with a major version number of 0 will introduce numerous changes and patches. As such, changes between such versions should be considered highly variable.
