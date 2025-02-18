@@ -53,7 +53,7 @@ async def run(args: Namespace):
             mlst_profiles = mlst_profiler.profile_multiple_strings(gen_strings)
             failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out)
             if len(failed) > 0:
-                print(f"A total of {len(failed)} IDs failed:\n{"\n".join(failed)}")
+                print(f"A total of {len(failed)} IDs failed (no profile found):\n{"\n".join(failed)}")
             print(f"Completed fetching MLSTs for {len(args.fastas)} sequences.")
 
 def run_asynchronously(args):
