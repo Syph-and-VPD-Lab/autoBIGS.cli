@@ -8,7 +8,7 @@ dynamic = ["version"]
 readme = "README.md"
 license = {file = "LICENSE"}
 dependencies = [
-    "autoBIGS-engine==0.10.*"
+    "autoBIGS-engine==0.11.*"
 ]
 requires-python = ">=3.12"
 description = "A CLI tool to rapidly fetch fetch MLST profiles given sequences for various diseases."
