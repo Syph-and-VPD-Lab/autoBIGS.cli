@@ -32,6 +32,11 @@ pipeline {
         stage("publish") {
             parallel {
                 stage ("git.reslate.systems") {
+                    when {
+                        not {
+                            tag '*.*.*'
+                        }
+                    }
                     environment {
                         CREDS = credentials('username-password-rs-git')
                     }
@@ -41,7 +46,7 @@ pipeline {
                 }
                 stage ("pypi.org") {
                     when {
-                        tag '*.*'
+                        tag '*.*.*'
                     }
                     environment {
                         TOKEN = credentials('pypi.org')
