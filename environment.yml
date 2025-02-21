@@ -10,3 +10,5 @@ dependencies:
   - conda-build
   - twine==6.0.1
   - setuptools_scm
+  - grayskull
+  - curl
