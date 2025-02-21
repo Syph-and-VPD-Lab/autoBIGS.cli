@@ -5,8 +5,8 @@ channels:
 dependencies:
   - pytest
   - pytest-asyncio
+  - pytest-cov
   - python-build
   - conda-build
   - twine==6.0.1
   - setuptools_scm
-  
