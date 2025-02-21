@@ -1,0 +1,12 @@
+name: base
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - pytest
+  - pytest-asyncio
+  - python-build
+  - conda-build
+  - twine==6.0.1
+  - setuptools_scm
+  
