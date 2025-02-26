@@ -6,7 +6,9 @@ from autobigs.engine.analysis.bigsdb import BIGSdbIndex
 
 def setup_parser(parser: ArgumentParser):
     parser.description = "Fetches the latest BIGSdb MLST database definitions."
-    parser.add_argument(
+    
+    retrieve_group = parser.add_mutually_exclusive_group(required=True)
+    retrieve_group.add_argument(
         "--retrieve-bigsdbs", "-l",
         action="store_true",
         dest="list_dbs",
@@ -15,15 +17,15 @@ def setup_parser(parser: ArgumentParser):
         help="Lists all known BIGSdb MLST databases (fetched from known APIs and cached)."
     )
 
-    parser.add_argument(
-        "--retrieve-bigsdb-schemas", "-lschemas",
+    retrieve_group.add_argument(
+        "--retrieve-bigsdb-schemes", "-lschemes",
         nargs="+",
         action="extend",
-        dest="list_bigsdb_schemas",
+        dest="list_bigsdb_schemes",
         required=False,
         default=[],
         type=str,
-        help="Lists the known schema IDs for a given BIGSdb sequence definition database name. The name, and then the ID of the schema is given."
+        help="Lists the known scheme IDs for a given BIGSdb sequence definition database name. The name, and then the ID of the scheme is given."
     )
 
     parser.add_argument(
@@ -39,10 +41,6 @@ def setup_parser(parser: ArgumentParser):
 
 async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
-        if args.list_dbs and len(args.list_bigsdb_schemas) > 0:
-            print("Cannot specify both database listing and schema listing, please choose one!")
-            exit(1)
-
         if args.list_dbs:
             known_seqdef_dbs = await bigsdb_index.get_known_seqdef_dbs(force=False)
             sorted_seqdef_dbs = [(name, source) for name, source in sorted(known_seqdef_dbs.items())]
@@ -55,21 +53,18 @@ async def run(args: Namespace):
                     writer.writerows(sorted_seqdef_dbs)
                     print("\nDatabase output written to {0}".format(args.csv_output))
 
-        for bigsdb_schema_name in args.list_bigsdb_schemas:
-            schemas = await bigsdb_index.get_schemas_for_seqdefdb(bigsdb_schema_name)
-            sorted_schemas = [(name, id) for name, id in sorted(schemas.items())]
-            print("The following are the known schemas for \"{0}\", and their associated IDs:".format(bigsdb_schema_name))
-            print("\n".join(["{0}: {1}".format(name, id) for name, id in sorted_schemas]))
-            if args.csv_output:
-                with open(args.csv_output, "w") as csv_out_handle:
-                    writer = csv.writer(csv_out_handle)
-                    writer.writerow(("Name", "ID"))
-                    writer.writerows(sorted_schemas)
-                    print("\nSchema list output written to {0}".format(args.csv_output))
-
-        if not (args.list_dbs or len(args.list_bigsdb_schemas) > 0):
-            print("Nothing to do. Try specifying \"-l\" for a list of known databases, or \"-h\" for more information.")
-            exit(1)
+        csv_scheme_rows = []
+        for bigsdb_scheme_name in args.list_bigsdb_schemes:
+            schemes = await bigsdb_index.get_schemes_for_seqdefdb(bigsdb_scheme_name)
+            csv_scheme_rows.extend([(name, id, bigsdb_scheme_name) for name, id in sorted(schemes.items())])
+            print("The following are the known schemes for \"{0}\", and their associated IDs:".format(bigsdb_scheme_name))
+            print("\n".join(["{0}: {1}".format(name, id) for name, id, database in csv_scheme_rows]))
+        if args.csv_output:
+            with open(args.csv_output, "w") as csv_out_handle:
+                writer = csv.writer(csv_out_handle)
+                writer.writerow(("Name", "ID", "Database Name"))
+                writer.writerows(csv_scheme_rows)
+            print("\nscheme list output written to {0}".format(args.csv_output))
 
 def run_asynchronously(args: Namespace):
     asyncio.run(run(args))

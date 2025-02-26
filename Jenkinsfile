@@ -38,10 +38,9 @@ pipeline {
             parallel {
                 stage ("git.reslate.systems") {
                     when {
-                        not {
-                            tag '*.*.*'
-                        }
+                        branch '**/main'
                     }
+
                     environment {
                         CREDS = credentials('username-password-rs-git')
                     }

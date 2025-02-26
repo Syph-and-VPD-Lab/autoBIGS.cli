@@ -9,7 +9,7 @@ This program is simply a command-line interface for [autoBIGS.engine](https://py
 This CLI is capable of exactly what [autoBIGS.engine](https://pypi.org/project/autoBIGS.engine) is capable of:
 - Import multiple whole genome FASTA files
 - Fetch the available BIGSdb databases that is currently live and available
-- Fetch the available BIGSdb database schemas for a given MLST database
+- Fetch the available BIGSdb database schemes for a given MLST database
 - Retrieve exact/non-exact MLST allele variant IDs based off a sequence
 - Retrieve MLST sequence type IDs based off a sequence
 - Inexact matches are annotated with an asterisk (\*)
@@ -17,7 +17,7 @@ This CLI is capable of exactly what [autoBIGS.engine](https://pypi.org/project/a
 
 ## Planned Features for CLI
 - Specifications of multi-threading capacity
-- Session authentication for updated database schemas (as required by both PubMLST and Institut Pasteur)
+- Session authentication for updated database schemes (as required by both PubMLST and Institut Pasteur)
 
 Please refer to [autoBIGS.engine](https://pypi.org/project/autoBIGS.engine) for more planned features.
 
@@ -33,11 +33,11 @@ This CLI can be installed with `pip`. Please ensure [pip is installed](https://p
 
 ### Example
 
-Let's say you have a fasta called `seq.fasta` which contains several sequences. You know all sequences in `seq.fasta` are Bordetella pertussis sequences, and you know you have the sequences for the necessary targets of your schema in each of them. You want to retrieve MLST profiles for all of them. This can be done by:
+Let's say you have a fasta called `seq.fasta` which contains several sequences. You know all sequences in `seq.fasta` are Bordetella pertussis sequences, and you know you have the sequences for the necessary targets of your scheme in each of them. You want to retrieve MLST profiles for all of them. This can be done by:
 
 1. Running `autobigs info -l` to list all available `seqdef` databases and find the database associated with Bordetella (you should see one called `pubmlst_bordetella_seqdef`).
 
-2. Then, run `autobigs info -lschema pubmlst_bordetella_seqdef` to get the available typing schemas and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`).
+2. Then, run `autobigs info -lscheme pubmlst_bordetella_seqdef` to get the available typing schemes and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`).
 
 3. Then, run `autobigs st -h` and familiarize yourself with the parameters needed for sequence typing.
 
