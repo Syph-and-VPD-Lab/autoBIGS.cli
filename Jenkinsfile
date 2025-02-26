@@ -9,6 +9,8 @@ pipeline {
     stages {
         stage("install") {
             steps {
+                sh 'conda config --add channels bioconda'
+                sh 'conda config --add channels https://git.reslate.systems/api/packages/ydeng/conda'
                 sh 'conda env update -n base -f environment.yml'
             }
         }
