@@ -55,7 +55,11 @@ def setup_parser(parser: ArgumentParser):
 
 async def run(args: Namespace):
     async with BIGSdbIndex() as bigsdb_index:
-        gen_strings = read_multiple_fastas(args.fastas)
+        fastas = list()
+        for fasta_str in args.fastas:
+            fastas.extend(fasta_str.split(','))
+
+        gen_strings = read_multiple_fastas(fastas)
         scheme_id_lookup = await bigsdb_index.get_schemes_for_seqdefdb(args.seqdefdb)
         scheme_name_lookup = {value: key for key, value in scheme_id_lookup.items()}
         known_dbs = await bigsdb_index.get_known_seqdef_dbs()
@@ -78,7 +82,7 @@ async def run(args: Namespace):
             failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out)
             if len(failed) > 0:
                 print(f"A total of {len(failed)} IDs failed (no profile found):\n{"\n".join(failed)}")
-            print(f"Completed fetching from {args.seqdefdb} for {scheme_name_lookup[selected_scheme_id]}s for {len(args.fastas)} sequences.")
+            print(f"Completed fetching from {args.seqdefdb} for {scheme_name_lookup[selected_scheme_id]}s for {len(fastas)} sequences.")
 
 def run_asynchronously(args):
     asyncio.run(run(args))
