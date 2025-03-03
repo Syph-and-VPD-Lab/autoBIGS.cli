@@ -37,7 +37,7 @@ Let's say you have a fasta called `seq.fasta` which contains several sequences. 
 
 1. Running `autoBIGS info -l` to list all available `seqdef` databases and find the database associated with Bordetella (you should see one called `pubmlst_bordetella_seqdef`).
 
-2. Then, run `autoBIGS info -lscheme pubmlst_bordetella_seqdef` to get the available typing schemes and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`). Alternatively, we can look at the name of the schemes and use those too (in this case, it is simply `MLST`).
+2. Then, run `autoBIGS info -lschemes pubmlst_bordetella_seqdef` to get the available typing schemes and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`). Alternatively, we can look at the name of the schemes and use those too (in this case, it is simply `MLST`).
 
 3. Then, run `autoBIGS st -h` and familiarize yourself with the parameters needed for sequence typing.
 
