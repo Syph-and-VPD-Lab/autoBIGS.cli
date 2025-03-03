@@ -35,13 +35,13 @@ This CLI can be installed with `pip`. Please ensure [pip is installed](https://p
 
 Let's say you have a fasta called `seq.fasta` which contains several sequences. You know all sequences in `seq.fasta` are Bordetella pertussis sequences, and you know you have the sequences for the necessary targets of your scheme in each of them. You want to retrieve MLST profiles for all of them. This can be done by:
 
-1. Running `autobigs info -l` to list all available `seqdef` databases and find the database associated with Bordetella (you should see one called `pubmlst_bordetella_seqdef`).
+1. Running `autoBIGS info -l` to list all available `seqdef` databases and find the database associated with Bordetella (you should see one called `pubmlst_bordetella_seqdef`).
 
-2. Then, run `autobigs info -lscheme pubmlst_bordetella_seqdef` to get the available typing schemes and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`).
+2. Then, run `autoBIGS info -lscheme pubmlst_bordetella_seqdef` to get the available typing schemes and their associated IDs. In this example, let's assume we want a normal MLST scheme. In this case, we would pay attention to the number next to `MLST` (it should be `3`). Alternatively, we can look at the name of the schemes and use those too (in this case, it is simply `MLST`).
 
-3. Then, run `autobigs st -h` and familiarize yourself with the parameters needed for sequence typing.
+3. Then, run `autoBIGS st -h` and familiarize yourself with the parameters needed for sequence typing.
 
-4. Namely, you should find that you will need to run `autobigs st seq.fasta pubmlst_bordetella_seqdef 3 output.csv`. You can optionally include multiple `FASTA` files, and `--stop-on-fail` to stop typing if one of your sequences fail to retrieve any type. 
+4. Namely, you should find that you will need to run `autoBIGS st seq.fasta pubmlst_bordetella_seqdef -sid 3 output.csv` (alternatively, `-sid 3` may be replaced with `-sn MLST`). You can optionally include multiple `FASTA` files, and `--stop-on-fail` to stop typing if one of your sequences fail to retrieve any type. 
 
 5. Sit tight, and wait. The `output.csv` will contain your results once completed.
 
