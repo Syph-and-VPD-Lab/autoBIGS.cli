@@ -53,18 +53,19 @@ async def run(args: Namespace):
                     writer.writerows(sorted_seqdef_dbs)
                     print("\nDatabase output written to {0}".format(args.csv_output))
 
-        csv_scheme_rows = []
-        for bigsdb_scheme_name in args.list_bigsdb_schemes:
-            schemes = await bigsdb_index.get_schemes_for_seqdefdb(bigsdb_scheme_name)
-            csv_scheme_rows.extend([(name, id, bigsdb_scheme_name) for name, id in sorted(schemes.items())])
-            print("The following are the known schemes for \"{0}\", and their associated IDs:".format(bigsdb_scheme_name))
-            print("\n".join(["{0}: {1}".format(name, id) for name, id, database in csv_scheme_rows]))
-        if args.csv_output:
-            with open(args.csv_output, "w") as csv_out_handle:
-                writer = csv.writer(csv_out_handle)
-                writer.writerow(("Name", "ID", "Database Name"))
-                writer.writerows(csv_scheme_rows)
-            print("\nscheme list output written to {0}".format(args.csv_output))
+        if args.list_bigsdb_schemes:
+            csv_scheme_rows = []
+            for bigsdb_scheme_name in args.list_bigsdb_schemes:
+                schemes = await bigsdb_index.get_schemes_for_seqdefdb(bigsdb_scheme_name)
+                csv_scheme_rows.extend([(name, id, bigsdb_scheme_name) for name, id in sorted(schemes.items())])
+                print("The following are the known schemes for \"{0}\", and their associated IDs:".format(bigsdb_scheme_name))
+                print("\n".join(["{0}: {1}".format(name, id) for name, id, database in csv_scheme_rows]))
+            if args.csv_output:
+                with open(args.csv_output, "w") as csv_out_handle:
+                    writer = csv.writer(csv_out_handle)
+                    writer.writerow(("Name", "ID", "Database Name"))
+                    writer.writerows(csv_scheme_rows)
+                print("\nscheme list output written to {0}".format(args.csv_output))
 
 def run_asynchronously(args: Namespace):
     asyncio.run(run(args))
