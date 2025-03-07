@@ -37,10 +37,6 @@ pipeline {
         stage("publish") {
             parallel {
                 stage ("git.reslate.systems") {
-                    when {
-                        branch '**/main'
-                    }
-
                     environment {
                         CREDS = credentials('username-password-rs-git')
                     }
