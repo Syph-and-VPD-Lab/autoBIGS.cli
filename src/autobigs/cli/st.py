@@ -79,7 +79,7 @@ async def run(args: Namespace):
             if not isinstance(mlst_profiler, BIGSdbMLSTProfiler):
                 raise TypeError("MLST profiler type invalid")
             mlst_profiles = mlst_profiler.profile_multiple_strings(gen_strings, args.stop_on_fail)
-            failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out)
+            failed = await write_mlst_profiles_as_csv(mlst_profiles, args.out, await bigsdb_index.get_scheme_loci(args.seqdefdb, selected_scheme_id))
             if len(failed) > 0:
                 print(f"A total of {len(failed)} IDs failed (no profile found):\n{"\n".join(failed)}")
             print(f"Completed fetching from {args.seqdefdb} for {scheme_name_lookup[selected_scheme_id]}s for {len(fastas)} sequences.")
